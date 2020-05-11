@@ -1,0 +1,25 @@
+package org.fiap.homework.fiap.rebu.vehicle.domain;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+public class Repair {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "open_date_time")
+    private LocalDateTime openDateTime;
+
+    @Column(name = "close_date_time")
+    private LocalDateTime closeDateTime;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
+
+    public Repair() {
+    }
+}

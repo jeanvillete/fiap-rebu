@@ -69,24 +69,24 @@ Será necessário entregar aqui no Portal do Aluno:
 
 # domínio e premissas
 
-#### aluno (STUDENT)
- - composto das informações nome, número de inscrição e código, onde as duas informações número da inscrição e código compõem a identificação deste registro.
+#### usuário (USER_DETAILS)
+- o usuário que faz utilização do serviço de viagens com veículos autônomos
+    - será mantido apenas um `nickname` (apelido/login) do usuário
 
-#### limite do cartão (LIMIT_CARD)
- - composto das informações data e hora do registro e o valor, e ainda uma chave estrangeira para o domínio aluno.  
- - o limite do cartão é uma informação que não pode ser apagada e nem alterada. caso um novo limite seja necessário, então um novo registro deve ser inserido.
- - o limite corrente do cartão é o último registro inserido, ou seja, o registro mais recente.  
- - domínio reponsável por responder perguntas como;
-   - qual o limite corrente de determinado aluno?
-   - quando o novo limite foi associado?
+#### localização (LOCATION)
+- composto basicamente da informação de endereço (address), utilizado pela entidade veículo e viagem/corrida (TRIP).
 
-#### transações do cartão (TRANSACTION_CARD)
- - composto das informações data e hora da transação, o valor da transação, uma descrição que é opcional, e há também uma chave estrangeira para o domínio limite do cartão.
- - transações com valores positivos representam uma operação de débito, ou seja, uma compra.
- - transações com valores negativos representam uma operação de crédito, que pode ser por exemplo o pagamento de uma fatura ou o estorno de um débito.
- - o saldo corrente do cartão é calculado somando o valor de todas as operações já realizadas.
- - uma transação de débito só pode ser efetivada caso o limite corrente seja maior que o saldo corrente.
- - na inserção de uma transação, uma vez com sucesso, deve-se retornar um UUID para a mesma.
+#### veículo (VEHICLE)
+- um veículo que faz parte da frota de automóveis autônomos.
+- para o registro de um veículo, as informações deste são;
+    - placa (identificador, não pode haver duplicidades)
+    - localização (no registro inicial, deve-se indicar sua localização inicial, e depois de atender viagens, sua localização será dinâmica)
+
+#### manutenção (RAPAIR)
+- entidade composta de dados de quando um veículo entrou e saiu do estado de manutenção
+
+#### corrida (TRIP)
+- entidade que compõe e liga um usuário a um veículo e a viagem/corrida em si, com os dados de origem e destino
 
 ---
 
@@ -94,225 +94,167 @@ Será necessário entregar aqui no Portal do Aluno:
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-##### criação de aluno; [issue #1](https://github.com/jeanvillete/fiap-spring/issues/1)
- - o caso de uso para criação de um aluno recebe no payload basicamente o nome do aluno.
- - aplicar trim no nome recebido e após esta aplicação, efetuar validação abaixo
- - o nome deve ser válido, contendo uma ocorrência de no mínimo três caracteres seguido por espaço e outros três caracteres.
- - caso já exista um aluno com mesmo nome, exceção de duplicidade deve ser lançada e com mensagem de erro explicando do problema e status code ***409 Conflict***
- - caso o nome seja válido, então gerar uma identificação para o aluno, composto do número da subscrição (7 dígitos) e o código (5 dígitos), onde este valor deve ser retornado; ***201 Created***
-   - o valor para subscrição deve ser incremental, ou seja, procurar o maior corrente e incrementar.
-   - o valor para o codigo deve ser um valor randomico entre 10000 e 99999, e não tem problema de conflitos.
-   - o valor de identificação deve ser retornado formatado; ***####### ###-##***
+##### listar veículos da frota;
+- o caso de uso para listagem de veículos tem por objetivo devolver uma lista de payloads que represente os dados dos
+veículos e que seja renderizado esta lista em um frontend, com as informações;
+    - placa (identificador)
+    - localização
+    - status
+        - Em Manutenção
+        - Em Trânsito Buscar Passageiro
+        - Em Trânsito Aguardando Embarque Passageiro
+        - Em Trânsito Com Passageiro
+        - Disponível
 
 ```
 [request]
-POST /students
-{
-    "name": "SAMPLE USER NAME"
-}
-
-[response]
-201 Created
-{
-    "id": "9999999 999-99",
-    "name": "SAMPLE USER NAME"
-}
-```
-
-##### atualização do nome do aluno; [issue #2](https://github.com/jeanvillete/fiap-spring/issues/2)
- - o caso de uso para atualização do nome do aluno recebe no payload o nome do aluno.
-   - a identificação do aluno deve ser fornecida como ***path variable***
- - caso já exista um outro aluno com mesmo nome, exceção da duplicação é devolvida; ***409 Conflict***
- - caso o nome seja válido, então armazenar novo nome; ***200 Ok***
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
-
-```
-[request]
-PUT /students/9999999 999-99
-{
-    "name": "UPDATED SAMPLE USER NAME"
-}
-
-[response]
-200 Ok
-```
-
-##### busca por aluno baseado no nome; [issue #3](https://github.com/jeanvillete/fiap-spring/issues/3)
- - o caso de uso para busca/listagem de aluno, serve basicamente para possibilitar encontrar a identificação do aluno, mas também permite uma busca por parte do nome.
-   - o nome de exemplo para busca deve ser fornecido  via ***query string***
-   - é obrigatório o fornecimento da ***query string*** com nome de exemplo, e deve conter pelo ao menos 2 caracteres.
- 
-```
-[request]
-GET /students?name=SAMPLE
+GET /vehicles
 
 [response]
 200 Ok
 [
     {
-        "id": "9999999 999-99",
-        "name": "UPDATED SAMPLE USER NAME"
+        "plate": "ABC-1234",
+        "location": "Rua X, Nr 1098, bairro Y, cidade baixa",
+        "status": "RAPAIRING"
+    },
+    {
+        "plate": "CBA-6633",
+        "location": "Rua José, Nr 18, centro",
+        "status": "ON_THE_WAY_TO_GET_PASSENGER"
+    },
+    {
+        "plate": "ABC-0099",
+        "location": "Rua Madureira, Nr 111, são paulo",
+        "status": "HOLDING_ON_FOR_ON_BOARDING"
+    },
+    {
+        "plate": "DDD-6633",
+        "location": "Rua José, Nr 18, centro",
+        "status": "TRIP_ON_THE_WAY"
+    },
+    {
+        "plate": "ABC-4321",
+        "location": "Rua José, Nr 18, centro",
+        "status": "AVAILABLE"
     }
 ]
 ```
 
-##### cria novo limite para aluno; [issue #4](https://github.com/jeanvillete/fiap-spring/issues/4)
- - o caso de uso para criação de novo limite para determinado aluno recebe basicamente no payload a informação do valor.
-   - a identificação do aluno deve ser fornecida como ***path variable***
-   - o valor deve ser um inteiro maior ou igual a zero (0)
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
- 
+##### cadastrar novo veículo; 
+- para cadastrar um veículo, deve-se fornecer um payload com os dados;
+    - placa
+    - localização
+
 ```
 [request]
-POST /students/9999999 999-99/card/limit
+POST /vehicles
 {
-    "value": 100.00
+    "plate": "ZZZ-9999",
+    "location": "Rua X, Nr 1098, bairro Y, cidade baixa"
 }
 
 [response]
 201 Created
 ```
 
-##### consulta limite corrente do aluno; [issue #5](https://github.com/jeanvillete/fiap-spring/issues/5)
- - o caso de uso para consulta do limite corrente para determinado aluno recebe apenas a identificação do aluno.
-   - a identificação do aluno deve ser fornecida como ***path variable***
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
- 
+##### colocar um veículo em manutenção; 
+- para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
+    - possível nova placa
+    - localização
+- caso a placa corrente fornecida via query string seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
+
 ```
 [request]
-GET /students/9999999 999-99/card/limit
+PATCH /vehicles/ABC-1234/repair/do
 
 [response]
 200 Ok
-{
-    "value": 100.00
-}
 ```
 
-##### lança transação de débito para aluno; [issue #6](https://github.com/jeanvillete/fiap-spring/issues/6)
- - uma transação de débito significa uma compra
- - valida se ***existe um limite associado para o aluno corrente***, caso requisito não seja atendido, devolver resposta explicando o problema; ***428 Precondition Required***
- - valida se o ***saldo corrente do aluno somado a transação fornecida é menor que o limite corrente***, caso requisito não seja atendido, devolver resposta explicando o problema; ***428 Precondition Required***
- - no caso de sucesso devolver o UUID que identifica a criação da transação
- - o corpo da requisição deve conter o valor da compra e uma descrição (opcional)
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
- 
-```
-[request]
-POST /students/9999999 999-99/card/debit
-{
-    "value": 100.00,
-    "description": "compra no mercado Sr Luiz"
-}
-
-[response]
-201 Created
-{
-    "uuid": "95963271-48a2-4dbd-abaa-93256de381d4"
-}
-```
-
-##### lança transação de crédito para aluno (estorno de compra); [issue #7](https://github.com/jeanvillete/fiap-spring/issues/7)
- - uma transação de crédito significa por exemplo o pagamento de uma fatura ou o estorno de uma compra, no caso corrente um estorno
- - no caso do estorno, a identificação do pagamento deve estar presente via ***path variable***
- - deve ser verificado se a transação correspondente existe, caso não seja encontrado, devolver resposta informando do problema ***404 Not Found***
- - não precisa ter corpo na requisição
- - no caso de sucesso do estorno, devolver o UUID que identifica a transação em equestão, no caso, o lançamento do estorno
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
+##### remover estado de manutenção do veículo; 
+- para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
+    - possível nova placa
+    - localização
+- caso a placa corrente fornecida via query string seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
 
 ```
 [request]
-POST /students/9999999 999-99/card/charge-back/95963271-48a2-4dbd-abaa-93256de381d4
-
-[response]
-201 Created
-{
-    "uuid": "7930f6a6-4589-47dd-a3d2-319b9c5346f8"
-}
-```
-
-##### lança transação de crédito para aluno (pagamento fatura); [issue #8](https://github.com/jeanvillete/fiap-spring/issues/8)
- - uma transação de crédito significa por exemplo o pagamento de uma fatura ou o estorno de uma compra, no caso corrente o pagamento de uma fatura
- - no caso de sucesso do estorno, devolver o UUID que identifica a transação do pagamento da fatura em equestão
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
-
-```
-[request]
-POST /students/9999999 999-99/card/bill-payment
-{
-    "value": 58.63
-}
-
-[response]
-201 Created
-{
-    "uuid": "7364259a-94aa-4c37-ad39-5e9837c0fd3e"
-}
-```
-
-##### calcula extrato para um determinado mês; [issue #9](https://github.com/jeanvillete/fiap-spring/issues/9)
- - para o calculo do extrato de um mês específico, deve-se obter todas as transações até este mês em questão, e calcular o saldo deste mês
- - o mês e ano que se procura o extrato deve ser informado ambos via ***path variable***, seguindo o formato ***YYYY-MM***
- - caso a identificação seja inválida ou não existir um registro para a mesma, devolver ***404 Not Found***
- - o header Accept deve ser fornecido pare decisão do retorno como json estruturado ou texto formatado.
-
-```
-[request]
-GET /students/9999999 999-99/card/statement/2019-01
-Accept: application/json
+PATCH /vehicles/ABC-1234/repair/done
 
 [response]
 200 Ok
-{
-    "statement-month": "2019-01"
-    "current-limit-value": 100.00,
-    "month-balance": 58.63,
-    "transactions": [
-        {
-            "datetime": "2019-01-02T12:10:15",
-            "uuid": "95963271-48a2-4dbd-abaa-93256de381d4",
-            "value": 100.00,
-            "description": "compra no mercado Sr Luiz"
-        },
-        {
-            "datetime": "2019-01-03T11:05:01",
-            "uuid": "7930f6a6-4589-47dd-a3d2-319b9c5346f8",
-            "value": 100.00,
-            "description": "ESTORNO DE COMPRA; compra no mercado Sr Luiz"
-        },
-        {
-            "datetime": "2019-01-29T05:18:56",
-            "uuid": "7364259a-94aa-4c37-ad39-5e9837c0fd3e",
-            "value": 58.63,
-            "description": "Pagamento de fatura 2019-01; $ 58.63"
-        }
-    ]
-}
 ```
+
+##### cadastrar usuário; 
+- para cadastrar um usuário, deve-se fornecer um payload com os dados;
+    - nickname
 
 ```
 [request]
-GET /students/9999999 999-99/card/statement/2019-01
-Accept: text/plain
+POST /users/
+{
+    "nickname": "sampleusr"
+}
 
 [response]
-201 Ok
+201 Created
+```
 
-Janeiro 2019
+##### login de usuário; 
+- para fazer login, o nickname do usuário deve ser fornecido, o no caso de resposta de sucesso, a sessão pode ser iniciada.
+- o nickname para login deve ser fornecido via "path variable"
 
-02/01/2019 12:10:15 95963271-48a2-4dbd-abaa-93256de381d4
-value           100.00
-description     compra no mercado Sr Luiz
+```
+[request]
+GET /users/sampleusr/login
 
-03/01/2019 11:05:01 7930f6a6-4589-47dd-a3d2-319b9c5346f8
-value           100.00
-description     ESTORNO DE COMPRA; compra no mercado Sr Luiz
+[response]
+200 Ok
+```
 
-29/01/2019 05:18:56 7364259a-94aa-4c37-ad39-5e9837c0fd3e
-value           58.63
-description     Pagamento de fatura 2019-01; $ 58.63
+##### usuário solicita veículo para viagem; 
+- para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
+- o nickname para login deve ser fornecido via "path variable"
+- o retorno da criação da viagem é um identificador (uuid)
 
-current limit   100.00
+```
+[request]
+POST /users/sampleusr/trips/
+{
+    "fromLocation": "Rua José, Nr 18, centro",
+    "toLocation": "Rua X, Nr 1098, bairro Y, cidade baixa"
+}
 
-month balance   58.63
+[response]
+201 Created
+{
+    "uuid": "7364259a-94aa-4c37-ad39-5e9837c0fd3e",
+    "fromLocation": "Rua José, Nr 18, centro",
+    "toLocation": "Rua X, Nr 1098, bairro Y, cidade baixa"
+}
+```
+
+##### confirmar embarque da viagem; 
+- usuário precisa confirmar o embarque na viagem
+
+```
+[request]
+PATCH /users/sampleusr/trips/boarding/7364259a-94aa-4c37-ad39-5e9837c0fd3e
+
+[response]
+200 OK
+```
+
+##### confirmar conclusão da viagem; 
+- ao concluir a viagem, usuário precisa confirmar fim da viagem
+- veículo tem a localização alterada para o destino da viagem
+- veículo tem o status alterado para disponível
+
+```
+[request]
+PATCH /users/sampleusr/trips/landing/7364259a-94aa-4c37-ad39-5e9837c0fd3e
+
+[response]
+200 OK
 ```
