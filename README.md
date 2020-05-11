@@ -22,14 +22,14 @@ também a possibilidade de usuários se inscreverem e solicitar viagens nestes c
 # instrução de execução
 
 ### a partir do binário; download e execução do jar empacotado
-Uma das opções é o download do **jar** já empacotado, o que dispensaria a necessidade de utilizaçã de ferramentas para build do código fonte.  
-Necessário fazer download da versão corrente disponível em; [fiap.spring-0.0.1-RELEASE.jar](https://github.com/jeanvillete/fiap-spring/packages/200965)  
+Uma das opções é o download do **jar** já empacotado, o que dispensaria a necessidade de utilização de ferramentas para build do código fonte.  
+Necessário fazer download da versão corrente disponível em; [TBD](https://github.com/jeanvillete/-)  
 Após o download, invocar comando abaixo via terminal;  
 
-`$ java -jar fiap.spring-0.0.1-RELEASE.jar`
+`$ java -jar fiap.rebu-0.0.1-RELEASE.jar`
 
 ### a partir do código fonte; clone e build/empacotamento do projeto
-Após efetuar o checkout do código, utilize o comando abaixo para excução da aplicação.  
+Após efetuar o clone do código, utilize o comando abaixo para excução da aplicação.  
 **NOTA:** Requisitos, maven e Java 8.  
 
 `$ mvn spring-boot:run`
@@ -38,16 +38,32 @@ Após efetuar o checkout do código, utilize o comando abaixo para excução da 
 
 # requisitos trabalho
 
-RF1 - Cadastro de Alunos  
-RF2 - O cadastro inicial dos potenciais clientes do cartão será realizado via integração com um arquivo .txt disponibilizado https://drive.google.com/open?id=19ILqrYjOEe4C840ZRwhKDauvhDZCKcWa  
-RF3 - As compras realizadas nos cartões dos clientes serão recebidas via integração com uma Autorizadora. Criar os endpoints necessários para receber as realizações de transações.  
-RF4 - Deve ser possível gerar um extrato via download (endpoint) ou enviado no email do cliente (pode escolher uma opção).  
-  
-RNF1 - Utilizar o Spring Framework.  
-RNF2 - Criar um arquivo readme.md com as instruções para subir o/os projeto/s.  
-RNF3 - Criar testes unitários e integrados para o/os projeto/s.  
-RNF4 - Gerar uma massa simulada de transações.  
-RNF5 - Documentação Swagger  
+Elaborar uma aplicação Web consumindo os Web Services de um sistema de controle de uma frota de veículos autônomos.  
+
+Elaborar os serviços necessários para o controle de uma frota de veículos autônomos, ideia principal:
+  - Usuário solicita um veículo;
+  - Sistema seleciona um veículo que esteja
+  - disponível e desloca até o local do usuário;
+  - Usuário entra no veículo;
+  - Sistema conduz o usuário até o local informado;
+
+Pontos críticos para avaliação:
+- Construção de API dentro dos padrões REST (visto em sala de aula);
+- Documentação (OpenAPI, Postman etc);
+- Aplicação Web consumindo os serviços.
+- Código-fonte em um VSC (exemplo: GitHub).
+
+Pontos extras:
+- Persistência;
+- Consumo de outras API's (exemplo: Geolocalização do Google Maps);
+- Deploy na Nuvem;
+
+Será necessário entregar aqui no Portal do Aluno:
+- Nome da aplicação;
+- Endereço do Código-fonte;
+- Se hospedado, informar o endereço da aplicação;
+- Documentação da API;
+- Print’s ou vídeo comprovando a implementação (telas no navegador e chamadas no Postman).
 
 ---
 
