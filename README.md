@@ -1,15 +1,21 @@
 # intro
 
-O projeto corrente atende o trabalho de gerenciamento de transações de um cartão de crédito fictício, desenvolvido dentro da faculdade.  
-O trabalho atende a matéria de Spring lecionada no curso de MBA, que tem o objetivo de apresentar possibilidades com o framework Spring Boot.  
+O projeto corrente atende ao trabalho da matéria ***Webservices And Restful Technologies***, que propõe o
+desenvolvimento de serviços web atendendo requisições RESTFUL para o gerenciamento de uma frota de carros autonomos e
+também a possibilidade de usuários se inscreverem e solicitar viagens nestes carros.
 
 ###### Escola: FIAP
-###### Curso: MBA FULLSTACK DEVELOPER, MICROSERVICES, CLOUD & IoT  
-###### Matéria: SPRING
-###### Prof. FABIO TADASHI MIYASATO
+###### Curso: MBA FULLSTACK DEVELOPER, MICROSERVICES, CLOUD & IoT
+###### Matéria: WEBSERVICES AND RESTFUL TECHNOLOGIES
+###### Prof. EDUARDO FERREIRA GALEGO
 
-O projeto é versionado no github através do repositório [github.com/jeanvillete/fiap-spring](https://github.com/jeanvillete/fiap-spring)  
-As atividades levantadas para serem desenvolvidas de acordo com cada ***caso de uso*** estão geridas no [projeto github jeanvillete/fiap-spring](https://github.com/jeanvillete/fiap-spring/projects/1)
+| Aluno | RM |
+| --- | --- |
+| JEAN BRUNO SOUTO VILLETE | RM 335435 |
+| MARCOS | RM 000000 |
+
+> O projeto é versionado no github através do repositório [github.com/fiap-rebu](https://github.com/jeanvillete/fiap-rebu)  
+> As atividades levantadas para serem desenvolvidas de acordo com cada ***caso de uso*** estão geridas no [projeto github/fiap-spring](https://github.com/jeanvillete/fiap-rebu/projects/1)
 
 ---
 
