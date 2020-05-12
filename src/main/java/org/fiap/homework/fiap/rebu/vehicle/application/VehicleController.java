@@ -1,10 +1,10 @@
 package org.fiap.homework.fiap.rebu.vehicle.application;
 
+import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
 import org.fiap.homework.fiap.rebu.vehicle.domain.usecase.VehicleUseCase;
 import org.fiap.homework.fiap.rebu.vehicle.domain.usecase.VehicleUseCase.VehiclePayload;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +23,9 @@ public class VehicleController {
         return vehicleUseCase.listVehicles();
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createVehicle(@RequestBody VehiclePayload vehiclePayload) throws InvalidSuppliedDataException {
+        this.vehicleUseCase.saveVehicle(vehiclePayload);
+    }
 }

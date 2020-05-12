@@ -22,6 +22,11 @@ public class Vehicle {
     public Vehicle() {
     }
 
+    public Vehicle(String plate, Location location) {
+        this.plate = plate;
+        this.location = location;
+    }
+
     public Optional<String> getPlate() {
         return Optional.ofNullable(
                 plate
