@@ -201,18 +201,6 @@ POST /users/
 201 Created
 ```
 
-##### login de usuário; 
-- para fazer login, o nickname do usuário deve ser fornecido, o no caso de resposta de sucesso, a sessão pode ser iniciada.
-- o nickname para login deve ser fornecido via "path variable"
-
-```
-[request]
-GET /users/sampleusr/login
-
-[response]
-200 Ok
-```
-
 ##### usuário solicita veículo para viagem; 
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
 - o nickname para login deve ser fornecido via "path variable"
