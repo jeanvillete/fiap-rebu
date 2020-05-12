@@ -12,7 +12,7 @@ também a possibilidade de usuários se inscreverem e solicitar viagens nestes c
 | Aluno | RM |
 | --- | --- |
 | JEAN BRUNO SOUTO VILLETE | RM 335435 |
-| MARCOS | RM 000000 |
+| MARCOS DE MENEZES SOUTO MOURA | RM 335907 |
 
 > O projeto é versionado no github através do repositório [github.com/fiap-rebu](https://github.com/jeanvillete/fiap-rebu)  
 > As atividades levantadas para serem desenvolvidas de acordo com cada ***caso de uso*** estão geridas no [projeto github/fiap-spring](https://github.com/jeanvillete/fiap-rebu/projects/1)
