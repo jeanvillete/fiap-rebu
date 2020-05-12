@@ -41,4 +41,9 @@ class VehicleServiceImpl implements VehicleService {
     public void save(Vehicle vehicle) {
         this.vehicleRepository.save(vehicle);
     }
+
+    @Override
+    public Optional<Vehicle> getVehicleByPlate(String plate) {
+        return vehicleRepository.findByPlate(plate);
+    }
 }

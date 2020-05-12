@@ -14,4 +14,6 @@ public interface VehicleService {
     void validLocation(String location) throws InvalidSuppliedDataException;
 
     void save(Vehicle vehicle);
+
+    Optional<Vehicle> getVehicleByPlate(String plate);
 }

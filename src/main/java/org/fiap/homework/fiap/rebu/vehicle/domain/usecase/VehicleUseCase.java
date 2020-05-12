@@ -3,10 +3,14 @@ package org.fiap.homework.fiap.rebu.vehicle.domain.usecase;
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
 import org.fiap.homework.fiap.rebu.location.domain.Location;
 import org.fiap.homework.fiap.rebu.location.domain.LocationService;
+import org.fiap.homework.fiap.rebu.vehicle.domain.Repair;
+import org.fiap.homework.fiap.rebu.vehicle.domain.RepairService;
 import org.fiap.homework.fiap.rebu.vehicle.domain.Vehicle;
 import org.fiap.homework.fiap.rebu.vehicle.domain.VehicleService;
+import org.fiap.homework.fiap.rebu.vehicle.domain.exception.VehicleNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +23,10 @@ public class VehicleUseCase {
         String location;
 
         public VehiclePayload() {
+        }
+
+        public VehiclePayload(String plate) {
+            this.plate = plate;
         }
 
         VehiclePayload(Vehicle vehicle) {
@@ -40,10 +48,12 @@ public class VehicleUseCase {
 
     private final VehicleService vehicleService;
     private final LocationService locationService;
+    private final RepairService repairService;
 
-    public VehicleUseCase(VehicleService vehicleService, LocationService locationService) {
+    public VehicleUseCase(VehicleService vehicleService, LocationService locationService, RepairService repairService) {
         this.vehicleService = vehicleService;
         this.locationService = locationService;
+        this.repairService = repairService;
     }
 
     public List<VehiclePayload> listVehicles() {
@@ -69,5 +79,27 @@ public class VehicleUseCase {
                 location
         );
         this.vehicleService.save(vehicle);
+    }
+
+    public void putVehicleOnRepairing(VehiclePayload vehiclePayload) throws VehicleNotFoundException {
+        Vehicle vehicle = vehicleService.getVehicleByPlate(vehiclePayload.plate)
+                .orElseThrow(() -> new VehicleNotFoundException("No vehicle was found for the given plate"));
+
+        Repair repair = new Repair(
+                LocalDateTime.now(),
+                vehicle
+        );
+        repairService.save(repair);
+    }
+
+    public void concludeRepairingForVehicle(VehiclePayload vehiclePayload) throws VehicleNotFoundException {
+        Vehicle vehicle = vehicleService.getVehicleByPlate(vehiclePayload.plate)
+                .orElseThrow(() -> new VehicleNotFoundException("No vehicle was found for the given plate"));
+
+        Repair repair = repairService.getRepairByVehicle(vehicle)
+                .orElseThrow(() -> new VehicleNotFoundException("No vehicle was found for the given plate"))
+                .closeRepair();
+
+        repairService.save(repair);
     }
 }

@@ -10,7 +10,7 @@ public class Repair {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "open_date_time")
+    @Column(name = "open_date_time", nullable = false)
     private LocalDateTime openDateTime;
 
     @Column(name = "close_date_time")
@@ -22,4 +22,16 @@ public class Repair {
 
     public Repair() {
     }
+
+    public Repair(LocalDateTime openDateTime, Vehicle vehicle) {
+        this.openDateTime = openDateTime;
+        this.vehicle = vehicle;
+    }
+
+    public Repair closeRepair() {
+        this.closeDateTime = LocalDateTime.now();
+
+        return this;
+    }
+
 }

@@ -21,7 +21,7 @@ CREATE TABLE VEHICLE (
 CREATE TABLE REPAIR (
     id INTEGER NOT NULL AUTO_INCREMENT,
     open_date_time TIMESTAMP NOT NULL,
-    close_date_time TIMESTAMP NOT NULL,
+    close_date_time TIMESTAMP,
     vehicle_id INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (vehicle_id) REFERENCES VEHICLE(id)
