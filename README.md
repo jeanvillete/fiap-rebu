@@ -90,11 +90,11 @@ Será necessário entregar aqui no Portal do Aluno:
 
 ---
 
-# casos de uso e seus endpoints
+# casos de uso e seus endpoints [use case]
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### listar veículos da frota; [issue #4](https://github.com/jeanvillete/fiap-rebu/issues/4)
+#### [use case: listar veículos da frota] [issue #4](https://github.com/jeanvillete/fiap-rebu/issues/4)
 - o caso de uso para listagem de veículos tem por objetivo devolver uma lista de payloads que represente os dados dos
 veículos e que seja renderizado esta lista em um frontend, com as informações;
     - placa (identificador)
@@ -143,7 +143,7 @@ GET /vehicles
 
 ---
 
-#### cadastrar novo veículo; [issue #5](https://github.com/jeanvillete/fiap-rebu/issues/5)
+#### [use case: cadastrar novo veículo] [issue #5](https://github.com/jeanvillete/fiap-rebu/issues/5)
 - para cadastrar um veículo, deve-se fornecer um payload com os dados;
     - placa
     - localização
@@ -162,7 +162,7 @@ POST /vehicles
 
 ---
 
-#### colocar um veículo em manutenção; [issue #6](https://github.com/jeanvillete/fiap-rebu/issues/6)
+#### [use case: colocar um veículo em manutenção] [issue #6](https://github.com/jeanvillete/fiap-rebu/issues/6)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
     - localização
@@ -178,7 +178,7 @@ PATCH /vehicles/ABC-1234/repair/do
 
 ---
 
-##### remover estado de manutenção do veículo; [issue #7](https://github.com/jeanvillete/fiap-rebu/issues/7)
+##### [use case: remover estado de manutenção do veículo] [issue #7](https://github.com/jeanvillete/fiap-rebu/issues/7)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
     - localização
@@ -194,7 +194,7 @@ PATCH /vehicles/ABC-1234/repair/done
 
 ---
 
-#### cadastrar usuário; [issue #8](https://github.com/jeanvillete/fiap-rebu/issues/8)
+#### [use case: cadastrar usuário] [issue #8](https://github.com/jeanvillete/fiap-rebu/issues/8)
 - para cadastrar um usuário, deve-se fornecer um payload com os dados;
     - nickname
 
@@ -211,7 +211,7 @@ POST /users/
 
 ---
 
-#### usuário solicita veículo para viagem; [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
+#### [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
 ##### este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
     - o nickname para login deve ser fornecido via "path variable"
@@ -244,7 +244,7 @@ POST /users/sampleusr/trips/
 
 ---
 
-#### confirmar embarque da viagem; [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
+#### [use case: confirmar embarque da viagem] [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
 - usuário precisa confirmar o embarque na viagem
 
 ```
@@ -257,7 +257,7 @@ PATCH /users/sampleusr/trips/boarding/7364259a-94aa-4c37-ad39-5e9837c0fd3e
 
 ---
 
-#### confirmar conclusão da viagem; [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
+#### [use case: confirmar conclusão da viagem] [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
 - ao concluir a viagem, usuário precisa confirmar fim da viagem
 - veículo tem a localização alterada para o destino da viagem
 - veículo tem o status alterado para disponível
