@@ -61,6 +61,10 @@ public class Trip {
         boardingDateTime = LocalDateTime.now();
     }
 
+    public void recordLandingDateTime() {
+        landingDateTime = LocalDateTime.now();
+    }
+
     public String getUuid() {
         return uuid;
     }

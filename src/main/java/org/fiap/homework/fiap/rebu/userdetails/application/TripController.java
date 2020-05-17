@@ -1,9 +1,7 @@
 package org.fiap.homework.fiap.rebu.userdetails.application;
 
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
-import org.fiap.homework.fiap.rebu.userdetails.domain.exception.NoCarAvailableForTrip;
-import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyOnBoarded;
-import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserHasOpenTrip;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.*;
 import org.fiap.homework.fiap.rebu.userdetails.domain.usecase.TripUseCase;
 import org.fiap.homework.fiap.rebu.userdetails.domain.usecase.TripUseCase.TripPayload;
 import org.springframework.http.HttpStatus;
@@ -28,5 +26,10 @@ public class TripController {
     @PatchMapping("boarding/{tripUUID}")
     public void markTripAsOnBoarded(@PathVariable String nickname, @PathVariable String tripUUID) throws TripAlreadyOnBoarded, InvalidSuppliedDataException {
         tripUseCase.markATripAsOnBoarded(nickname, tripUUID);
+    }
+
+    @PatchMapping("landing/{tripUUID}")
+    public void markATripAsFinished(@PathVariable String nickname, @PathVariable String tripUUID) throws InvalidSuppliedDataException, TripIsNotYetOnBoarded, TripAlreadyFinished {
+        tripUseCase.markATripAsFinished(nickname, tripUUID);
     }
 }

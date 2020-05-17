@@ -60,5 +60,7 @@ echo "confirma embarque de viagem para usuário user-b, com id da viagem; ${trip
 curl -v -w '\n' localhost:8080/users/user-b/trips/boarding/${tripUUIDForUserB} -X PATCH
 
 # conclui viagens; somente usuário user-b vai confirmar fim da viagem
+echo "confirma conclusão da viagem (desembarque) de viagem para usuário user-b, com id da viagem; ${tripUUIDForUserB}"
+curl -v -w '\n' localhost:8080/users/user-b/trips/landing/${tripUUIDForUserB} -X PATCH
 
 # lista veículos e seus estados

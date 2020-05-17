@@ -1,7 +1,9 @@
 package org.fiap.homework.fiap.rebu.userdetails.domain;
 
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyFinished;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyOnBoarded;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripIsNotYetOnBoarded;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -45,6 +47,22 @@ class TripServiceImpl implements TripService {
             throw new TripAlreadyOnBoarded(
                     "The trip identified by uuid [" + trip.getUuid() + "] is already recorded as on boarded."
             );
+        }
+    }
+
+    @Override
+    public void ensureTripIsOnBoarded(Trip trip) throws TripIsNotYetOnBoarded {
+        if (trip.getBoardingDateTime() == null) {
+            throw new TripIsNotYetOnBoarded(
+                    "The trip identified by uuid [" + trip.getUuid() + "] is not yet on boarded."
+            );
+        }
+    }
+
+    @Override
+    public void ensureTripIsNotFinished(Trip trip) throws TripAlreadyFinished {
+        if (trip.getLandingDateTime() != null) {
+            throw new TripAlreadyFinished("The trip identified by uuid [" + trip.getUuid() + "] is already finished.");
         }
     }
 }
