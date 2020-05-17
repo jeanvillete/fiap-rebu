@@ -141,6 +141,8 @@ GET /vehicles
 ]
 ```
 
+---
+
 #### cadastrar novo veículo; [issue #5](https://github.com/jeanvillete/fiap-rebu/issues/5)
 - para cadastrar um veículo, deve-se fornecer um payload com os dados;
     - placa
@@ -158,6 +160,8 @@ POST /vehicles
 201 Created
 ```
 
+---
+
 #### colocar um veículo em manutenção; [issue #6](https://github.com/jeanvillete/fiap-rebu/issues/6)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
@@ -172,6 +176,8 @@ PATCH /vehicles/ABC-1234/repair/do
 200 Ok
 ```
 
+---
+
 ##### remover estado de manutenção do veículo; [issue #7](https://github.com/jeanvillete/fiap-rebu/issues/7)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
@@ -185,6 +191,8 @@ PATCH /vehicles/ABC-1234/repair/done
 [response]
 200 Ok
 ```
+
+---
 
 #### cadastrar usuário; [issue #8](https://github.com/jeanvillete/fiap-rebu/issues/8)
 - para cadastrar um usuário, deve-se fornecer um payload com os dados;
@@ -234,6 +242,8 @@ POST /users/sampleusr/trips/
 }
 ```
 
+---
+
 #### confirmar embarque da viagem; [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
 - usuário precisa confirmar o embarque na viagem
 
@@ -244,6 +254,8 @@ PATCH /users/sampleusr/trips/boarding/7364259a-94aa-4c37-ad39-5e9837c0fd3e
 [response]
 200 OK
 ```
+
+---
 
 #### confirmar conclusão da viagem; [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
 - ao concluir a viagem, usuário precisa confirmar fim da viagem
