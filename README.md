@@ -213,10 +213,10 @@ POST /users/
 
 #### 5.6 - [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
 ##### este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema
-- se o usuário não for encontrado, devolver mensagem informando o ocorrido com status ***400 Bad Request***
-- os campos localização de origem e destino são obrigatórios, e caso não for fornecido, devolver mensagem informando o ocorrido com status ***400 Bad Request***
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
     - o nickname para login deve ser fornecido via "path variable"
+    - se o usuário não for encontrado, devolver mensagem informando o ocorrido com status ***400 Bad Request***
+    - os campos localização de origem e destino são obrigatórios, e caso não for fornecido, devolver mensagem informando o ocorrido com status ***400 Bad Request***
 - a localização de origem e destino do usuário devem ser registradas na tabela de domínio LOCATION
 - o retorno da criação da viagem é um identificador (uuid)
     - a viagem em si é uma tupla para o domínio TRIP que é composto/agragador dos dados para;
@@ -225,6 +225,9 @@ POST /users/
         - um local de origem
         - um local de destino
 - a aplicação deve achar um veículo que esteja disponível para fazer a viagem, e colocar este veículo no estado de em transito para o local de origem do usuário, ou seja, local de origem da viagem
+    - um veículo disponível para viagem é uma tupla de VEHICLE onde;
+        - ***não há relação com REPAIR#closeDateTime == null***; se o veículo estiver com um reparo em aberto, este veículo está em manutenção e logo não está disponível
+        - ***não há relação com TRIP#landingDateTime == null***; se o veículo está em uma viagem que ainda não ocorreu o desembarque, o veículo não está disponível
     - caso não for encontrado nenhum veículo disponível, deve ser retornado uma mensagem informando que ***nenhum veículo disponível foi encontrado para a viagem*** e devolver o código ***412 Precondition Failed***
 
 ```
