@@ -1,4 +1,4 @@
-# intro
+# 1 - intro
 
 O projeto corrente atende ao trabalho da matéria ***Webservices And Restful Technologies***, que propõe o
 desenvolvimento de serviços web atendendo requisições RESTFUL para o gerenciamento de uma frota de carros autonomos e
@@ -19,16 +19,16 @@ também a possibilidade de usuários se inscreverem e solicitar viagens nestes c
 
 ---
 
-# instrução de execução
+# 2 - instrução de execução
 
-### a partir do binário; download e execução do jar empacotado
+### 2.1 - a partir do binário; download e execução do jar empacotado
 Uma das opções é o download do **jar** já empacotado, o que dispensaria a necessidade de utilização de ferramentas para build do código fonte.  
 Necessário fazer download da versão corrente disponível em; [TBD](https://github.com/jeanvillete/-)  
 Após o download, invocar comando abaixo via terminal;  
 
 `$ java -jar fiap.rebu-0.0.1-RELEASE.jar`
 
-### a partir do código fonte; clone e build/empacotamento do projeto
+### 2.2 - a partir do código fonte; clone e build/empacotamento do projeto
 Após efetuar o clone do código, utilize o comando abaixo para excução da aplicação.  
 **NOTA:** Requisitos, maven e Java 8.  
 
@@ -36,7 +36,7 @@ Após efetuar o clone do código, utilize o comando abaixo para excução da apl
 
 ---
 
-# requisitos trabalho
+# 3 - requisitos trabalho
 
 Elaborar uma aplicação Web consumindo os Web Services de um sistema de controle de uma frota de veículos autônomos.  
 
@@ -67,13 +67,13 @@ Será necessário entregar aqui no Portal do Aluno:
 
 ---
 
-# domínio e premissas
+# 4 - domínio e premissas
 
-#### usuário (USER_DETAILS)
+#### 4.4 - usuário (USER_DETAILS)
 - o usuário que faz utilização do serviço de viagens com veículos autônomos
     - será mantido apenas um `nickname` (apelido/login) do usuário
 
-#### localização (LOCATION)
+#### 4.2 - localização (LOCATION)
 - composto basicamente da informação de endereço (address), utilizado pela entidade veículo e viagem/corrida (TRIP).
 
 #### veículo (VEHICLE)
@@ -82,19 +82,19 @@ Será necessário entregar aqui no Portal do Aluno:
     - placa (identificador, não pode haver duplicidades)
     - localização (no registro inicial, deve-se indicar sua localização inicial, e depois de atender viagens, sua localização será dinâmica)
 
-#### manutenção (RAPAIR)
+#### 4.3 - manutenção (RAPAIR)
 - entidade composta de dados de quando um veículo entrou e saiu do estado de manutenção
 
-#### corrida (TRIP)
+#### 4.4 - corrida (TRIP)
 - entidade que compõe e liga um usuário a um veículo e a viagem/corrida em si, com os dados de origem e destino
 
 ---
 
-# casos de uso e seus endpoints [use case]
+# 5 - casos de uso e seus endpoints [use case]
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### [use case: listar veículos da frota] [issue #4](https://github.com/jeanvillete/fiap-rebu/issues/4)
+#### 5.1 - [use case: listar veículos da frota] [issue #4](https://github.com/jeanvillete/fiap-rebu/issues/4)
 - o caso de uso para listagem de veículos tem por objetivo devolver uma lista de payloads que represente os dados dos
 veículos e que seja renderizado esta lista em um frontend, com as informações;
     - placa (identificador)
@@ -143,7 +143,7 @@ GET /vehicles
 
 ---
 
-#### [use case: cadastrar novo veículo] [issue #5](https://github.com/jeanvillete/fiap-rebu/issues/5)
+#### 5.2 - [use case: cadastrar novo veículo] [issue #5](https://github.com/jeanvillete/fiap-rebu/issues/5)
 - para cadastrar um veículo, deve-se fornecer um payload com os dados;
     - placa
     - localização
@@ -162,7 +162,7 @@ POST /vehicles
 
 ---
 
-#### [use case: colocar um veículo em manutenção] [issue #6](https://github.com/jeanvillete/fiap-rebu/issues/6)
+#### 5.3 - [use case: colocar um veículo em manutenção] [issue #6](https://github.com/jeanvillete/fiap-rebu/issues/6)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
     - localização
@@ -178,7 +178,7 @@ PATCH /vehicles/ABC-1234/repair/do
 
 ---
 
-##### [use case: remover estado de manutenção do veículo] [issue #7](https://github.com/jeanvillete/fiap-rebu/issues/7)
+##### 5.4 - [use case: remover estado de manutenção do veículo] [issue #7](https://github.com/jeanvillete/fiap-rebu/issues/7)
 - para atualização dos dados de um veículo, deve-se fornecer via query string a placa atual e um payload com os dados;
     - possível nova placa
     - localização
@@ -194,7 +194,7 @@ PATCH /vehicles/ABC-1234/repair/done
 
 ---
 
-#### [use case: cadastrar usuário] [issue #8](https://github.com/jeanvillete/fiap-rebu/issues/8)
+#### 5.5 - [use case: cadastrar usuário] [issue #8](https://github.com/jeanvillete/fiap-rebu/issues/8)
 - para cadastrar um usuário, deve-se fornecer um payload com os dados;
     - nickname
 
@@ -211,7 +211,7 @@ POST /users/
 
 ---
 
-#### [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
+#### 5.6 - [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
 ##### este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
     - o nickname para login deve ser fornecido via "path variable"
@@ -244,7 +244,7 @@ POST /users/sampleusr/trips/
 
 ---
 
-#### [use case: confirmar embarque da viagem] [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
+#### 5.7 - [use case: confirmar embarque da viagem] [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
 - usuário precisa confirmar o embarque na viagem
 
 ```
@@ -257,7 +257,7 @@ PATCH /users/sampleusr/trips/boarding/7364259a-94aa-4c37-ad39-5e9837c0fd3e
 
 ---
 
-#### [use case: confirmar conclusão da viagem] [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
+#### 5.8 - [use case: confirmar conclusão da viagem] [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
 - ao concluir a viagem, usuário precisa confirmar fim da viagem
 - veículo tem a localização alterada para o destino da viagem
 - veículo tem o status alterado para disponível
