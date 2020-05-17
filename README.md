@@ -94,7 +94,7 @@ Será necessário entregar aqui no Portal do Aluno:
 
 abaixo segue a lista de casos de uso e exemplos de requisições e respostas;  
 
-#### listar veículos da frota;
+#### listar veículos da frota; [i4]
 - o caso de uso para listagem de veículos tem por objetivo devolver uma lista de payloads que represente os dados dos
 veículos e que seja renderizado esta lista em um frontend, com as informações;
     - placa (identificador)
