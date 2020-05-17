@@ -8,6 +8,7 @@ import org.fiap.homework.fiap.rebu.userdetails.domain.TripService;
 import org.fiap.homework.fiap.rebu.userdetails.domain.User;
 import org.fiap.homework.fiap.rebu.userdetails.domain.UserService;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.NoCarAvailableForTrip;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyOnBoarded;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserHasOpenTrip;
 import org.fiap.homework.fiap.rebu.vehicle.domain.Vehicle;
 import org.fiap.homework.fiap.rebu.vehicle.domain.VehicleService;
@@ -72,6 +73,7 @@ public class TripUseCase {
                 .orElseThrow(() ->
                         new InvalidSuppliedDataException("No user found for the provided nickname; " + userNickname)
                 );
+
         userService.ensureThereIsNoOpenTripForTheUser(user);
 
         tripService.validateFromLocationAndToLocation(tripPayload.fromLocation, tripPayload.toLocation);
@@ -99,5 +101,30 @@ public class TripUseCase {
         tripService.save(newTrip);
 
         return new TripPayload(newTrip);
+    }
+
+    public void markATripAsOnBoarded(String userNickname, String tripUUID) throws InvalidSuppliedDataException, TripAlreadyOnBoarded {
+        User user = userService.findUserByNickname(userNickname)
+                .orElseThrow(() ->
+                        new InvalidSuppliedDataException("No user found for the provided nickname; " + userNickname)
+                );
+
+        Trip trip = tripService.findByUserNicknameAndTripUUID(user.getNickname(), tripUUID)
+                .orElseThrow(() ->
+                        new InvalidSuppliedDataException(
+                                "No trip could found for the provided nickname [" + user.getNickname() + "] and " +
+                                        "trip uuid [" + tripUUID + "]"
+                        )
+                );
+
+        tripService.ensureTripAvailableForOnBoard(trip);
+
+        trip.recordOnBoardDateTime();
+
+        Vehicle vehicle = trip.getVehicle();
+        vehicle.setLocation(trip.getFromLocation());
+        vehicleService.save(vehicle);
+
+        tripService.save(trip);
     }
 }

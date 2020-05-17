@@ -1,7 +1,10 @@
 package org.fiap.homework.fiap.rebu.userdetails.domain;
 
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyOnBoarded;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 class TripServiceImpl implements TripService {
@@ -29,5 +32,19 @@ class TripServiceImpl implements TripService {
     @Override
     public void save(Trip trip) {
         tripRepository.save(trip);
+    }
+
+    @Override
+    public Optional<Trip> findByUserNicknameAndTripUUID(String nickname, String tripUUID) {
+        return tripRepository.findByUUIDAndUserNickname(tripUUID, nickname);
+    }
+
+    @Override
+    public void ensureTripAvailableForOnBoard(Trip trip) throws TripAlreadyOnBoarded {
+        if (trip.getBoardingDateTime() != null) {
+            throw new TripAlreadyOnBoarded(
+                    "The trip identified by uuid [" + trip.getUuid() + "] is already recorded as on boarded."
+            );
+        }
     }
 }

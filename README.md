@@ -251,7 +251,13 @@ POST /users/sampleusr/trips/
 ---
 
 #### 5.7 - [use case: confirmar embarque da viagem] [issue #10](https://github.com/jeanvillete/fiap-rebu/issues/10)
-- usuário precisa confirmar o embarque na viagem
+##### este caso de uso necessita que já exista determinado usuário com uma viagem em aberto, sem embarque associada a este usuário
+- o nickname para login deve ser fornecido via "path variable"
+    - se o usuário não for encontrado, devolver mensagem informando o ocorrido com status ***400 Bad Request***
+- o uuid da viagem deve ser fornecido via "path variable"
+    - se o usuário não tiver a viagem identificada pelo uuid associada, devolver mensagem de erro do ocorrido com status ***400 Bad Request***
+    - a viagem precisa ter a informação data do embarque não populada, caso contrário, devolver mensagem informando o ocorrido com status ***400 Bad Request***
+- a localização do veículo deve ser alterada para a localização do embarque (origem) da viagem
 
 ```
 [request]
@@ -264,6 +270,7 @@ PATCH /users/sampleusr/trips/boarding/7364259a-94aa-4c37-ad39-5e9837c0fd3e
 ---
 
 #### 5.8 - [use case: confirmar conclusão da viagem] [issue #11](https://github.com/jeanvillete/fiap-rebu/issues/11)
+##### este caso de uso necessita que já exista determinado usuário com uma viagem em aberto, com data de embarque populada mas não finalizada associada a este usuário
 - ao concluir a viagem, usuário precisa confirmar fim da viagem
 - veículo tem a localização alterada para o destino da viagem
 - veículo tem o status alterado para disponível

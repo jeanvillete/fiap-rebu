@@ -2,6 +2,7 @@ package org.fiap.homework.fiap.rebu.common.application;
 
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.NoCarAvailableForTrip;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.TripAlreadyOnBoarded;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserHasOpenTrip;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserNicknameConflictException;
 import org.fiap.homework.fiap.rebu.vehicle.domain.exception.VehicleNotFoundException;
@@ -31,7 +32,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(value = {NoCarAvailableForTrip.class, UserHasOpenTrip.class})
+    @ExceptionHandler(value = {NoCarAvailableForTrip.class, UserHasOpenTrip.class, TripAlreadyOnBoarded.class})
     protected ResponseEntity<Object> handlePreconditionRequired(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.PRECONDITION_REQUIRED, request);
     }
