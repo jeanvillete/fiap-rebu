@@ -76,16 +76,16 @@ Será necessário entregar aqui no Portal do Aluno:
 #### 4.2 - localização (LOCATION)
 - composto basicamente da informação de endereço (address), utilizado pela entidade veículo e viagem/corrida (TRIP).
 
-#### veículo (VEHICLE)
+#### 4.3 - veículo (VEHICLE)
 - um veículo que faz parte da frota de automóveis autônomos.
 - para o registro de um veículo, as informações deste são;
     - placa (identificador, não pode haver duplicidades)
     - localização (no registro inicial, deve-se indicar sua localização inicial, e depois de atender viagens, sua localização será dinâmica)
 
-#### 4.3 - manutenção (RAPAIR)
+#### 4.4 - manutenção (RAPAIR)
 - entidade composta de dados de quando um veículo entrou e saiu do estado de manutenção
 
-#### 4.4 - corrida (TRIP)
+#### 4.5 - corrida (TRIP)
 - entidade que compõe e liga um usuário a um veículo e a viagem/corrida em si, com os dados de origem e destino
 
 ---
