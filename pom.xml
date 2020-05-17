@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>org.fiap.homework</groupId>
 	<artifactId>fiap.rebu</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-RELEASE</version>
 	<name>fiap.rebu</name>
 	<description>Trabalho MBA FIAP; Projeto para conclusão de módulo da matéria; Webservices And Restful Technologies</description>
 

@@ -23,7 +23,7 @@ também a possibilidade de usuários se inscreverem e solicitar viagens nestes c
 
 ### 2.1 - a partir do binário; download e execução do jar empacotado
 Uma das opções é o download do **jar** já empacotado, o que dispensaria a necessidade de utilização de ferramentas para build do código fonte.  
-Necessário fazer download da versão corrente disponível em; [TBD](https://github.com/jeanvillete/-)  
+Necessário fazer download da versão corrente disponível em; [fiap.rebu-0.0.1-RELEASE.jar](https://github.com/jeanvillete/fiap-rebu/packages/230835)  
 Após o download, invocar comando abaixo via terminal;  
 
 `$ java -jar fiap.rebu-0.0.1-RELEASE.jar`
@@ -33,6 +33,10 @@ Após efetuar o clone do código, utilize o comando abaixo para excução da apl
 **NOTA:** Requisitos, maven e Java 8.  
 
 `$ mvn spring-boot:run`
+
+### 2.3 - com o serviço no ar, criação de massa de exemplo
+Utilize o script disponível no diretório `bash-test-case` para criação de massa de exemplo, invocando via terminal;  
+`$ ./bash-test-case/test-case-1.sh`
 
 ---
 
