@@ -59,7 +59,7 @@ public class VehicleUseCase {
     public static final class VehiclePayload {
         String plate;
         String location;
-        VehicleStatusPayload vehicleStatusPayload;
+        VehicleStatusPayload status;
 
         public VehiclePayload() {
         }
@@ -74,7 +74,7 @@ public class VehicleUseCase {
                     .map(Location::getAddress)
                     .map(address -> address.orElse(""))
                     .orElse("");
-            this.vehicleStatusPayload = VehicleStatusPayload.valueOf(vehicle);
+            this.status = VehicleStatusPayload.valueOf(vehicle);
         }
 
         public String getPlate() {
@@ -85,8 +85,8 @@ public class VehicleUseCase {
             return location;
         }
 
-        public VehicleStatusPayload getVehicleStatusPayload() {
-            return vehicleStatusPayload;
+        public VehicleStatusPayload getStatus() {
+            return status;
         }
     }
 
