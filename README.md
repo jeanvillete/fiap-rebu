@@ -202,9 +202,18 @@ POST /users/
 ```
 
 #### usuário solicita veículo para viagem; [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
+*este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema*
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
-- o nickname para login deve ser fornecido via "path variable"
+    - o nickname para login deve ser fornecido via "path variable"
+- a localização de origem e destino do usuário devem ser registradas na tabela de domínio LOCATION
 - o retorno da criação da viagem é um identificador (uuid)
+    - a viagem em si é uma tupla para o domínio TRIP que é composto/agragador dos dados para;
+        - um usuário
+        - um veículo (até este momento disponível)
+        - um local de origem
+        - um local de destino
+- a aplicação deve achar um veículo que esteja disponível para fazer a viagem, e colocar este veículo no estado de em transito para o local de origem do usuário, ou seja, local de origem da viagem
+    - caso não for encontrado nenhum veículo disponível, deve ser retornado uma mensagem informando que ***nenhum veículo disponível foi encontrado para a viagem*** e devolver o código ***412 Precondition Failed***
 
 ```
 [request]
