@@ -32,7 +32,7 @@ public class VehicleController {
 
     @PatchMapping
     @RequestMapping("{plate}/repair/do")
-    public void putVehicleOnRepairing(@PathVariable String plate) throws VehicleNotFoundException {
+    public void putVehicleOnRepairing(@PathVariable String plate) throws VehicleNotFoundException, InvalidSuppliedDataException {
         this.vehicleUseCase.putVehicleOnRepairing(
                 new VehiclePayload(
                         plate

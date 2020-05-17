@@ -30,13 +30,15 @@ CREATE TABLE REPAIR (
 CREATE TABLE TRIP (
     id INTEGER NOT NULL AUTO_INCREMENT,
     uuid VARCHAR(15) NOT NULL,
+    user_details_id INTEGER NOT NULL,
     from_location_id INTEGER NOT NULL,
     to_location_id INTEGER NOT NULL,
     request_date_time TIMESTAMP NOT NULL,
-    boarding_date_time TIMESTAMP NOT NULL,
-    landing_date_time TIMESTAMP NOT NULL,
+    boarding_date_time TIMESTAMP,
+    landing_date_time TIMESTAMP,
     vehicle_id INTEGER NOT NULL,
     PRIMARY KEY (id),
+    FOREIGN KEY (user_details_id) REFERENCES USER_DETAILS(id),
     FOREIGN KEY (from_location_id) REFERENCES LOCATION(id),
     FOREIGN KEY (to_location_id) REFERENCES LOCATION(id),
     FOREIGN KEY (vehicle_id) REFERENCES VEHICLE(id)

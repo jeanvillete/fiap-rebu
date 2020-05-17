@@ -68,6 +68,7 @@ public class VehicleUseCase {
         this.vehicleService.validPlate(vehiclePayload.plate);
         this.vehicleService.validLocation(vehiclePayload.location);
 
+        this.vehicleService.checkPlateIsAlreadyInUse(vehiclePayload.plate);
 
         Location location = new Location(
                 vehiclePayload.location
@@ -81,9 +82,13 @@ public class VehicleUseCase {
         this.vehicleService.save(vehicle);
     }
 
-    public void putVehicleOnRepairing(VehiclePayload vehiclePayload) throws VehicleNotFoundException {
-        Vehicle vehicle = vehicleService.getVehicleByPlate(vehiclePayload.plate)
+    public void putVehicleOnRepairing(VehiclePayload vehiclePayload) throws VehicleNotFoundException, InvalidSuppliedDataException {
+        String vehiclePlate = vehiclePayload.plate;
+
+        Vehicle vehicle = vehicleService.getVehicleByPlate(vehiclePlate)
                 .orElseThrow(() -> new VehicleNotFoundException("No vehicle was found for the given plate"));
+
+        vehicleService.vehicleAvailableForRepairing(vehicle);
 
         Repair repair = new Repair(
                 LocalDateTime.now(),

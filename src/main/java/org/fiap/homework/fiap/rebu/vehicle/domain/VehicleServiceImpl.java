@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 @Service
 class VehicleServiceImpl implements VehicleService {
@@ -45,5 +46,38 @@ class VehicleServiceImpl implements VehicleService {
     @Override
     public Optional<Vehicle> getVehicleByPlate(String plate) {
         return vehicleRepository.findByPlate(plate);
+    }
+
+    @Override
+    public Optional<Vehicle> retrieveAnyAvailableVehicle() {
+        return vehicleRepository.retrieveAnyAvailableVehicle()
+                .map(List::stream)
+                .map(Stream::findAny)
+                .orElse(Optional.empty());
+    }
+
+    @Override
+    public void checkPlateIsAlreadyInUse(String plate) throws InvalidSuppliedDataException {
+        Integer countPlate = vehicleRepository.countByPlate(plate)
+            .orElse(0);
+
+        if (countPlate > 0) {
+            throw new InvalidSuppliedDataException("There is already a vehicle recorded with the plate \"" + plate + "\"");
+        }
+    }
+
+    @Override
+    public void vehicleAvailableForRepairing(Vehicle vehicle) throws InvalidSuppliedDataException {
+        boolean anyCurrentRepairForVehicle = vehicle.getRepairs()
+                .stream()
+                .filter(repair -> repair.getCloseDateTime() == null)
+                .findAny()
+                .isPresent();
+
+        if (anyCurrentRepairForVehicle) {
+            throw new InvalidSuppliedDataException(
+                    "The vehicle with plate \"" + vehicle.getPlate() + "\" is already on repairing."
+            );
+        }
     }
 }

@@ -213,6 +213,7 @@ POST /users/
 
 #### 5.6 - [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
 ##### este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema
+- caso já exista uma viagem em aberta para o usuário, então este não pode solicitar uma nova viagem, logo devolver mensagem informando do problema com status ***412 Precondition Failed***
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
     - o nickname para login deve ser fornecido via "path variable"
     - se o usuário não for encontrado, devolver mensagem informando o ocorrido com status ***400 Bad Request***

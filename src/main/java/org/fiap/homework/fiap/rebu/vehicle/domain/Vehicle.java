@@ -1,9 +1,12 @@
 package org.fiap.homework.fiap.rebu.vehicle.domain;
 
 import org.fiap.homework.fiap.rebu.location.domain.Location;
+import org.fiap.homework.fiap.rebu.userdetails.domain.Trip;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 
 @Entity
 public class Vehicle {
@@ -18,6 +21,12 @@ public class Vehicle {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
+
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    private Set<Repair> repairs;
+
+    @OneToMany(mappedBy = "vehicle", fetch = FetchType.LAZY)
+    private Set<Trip> trips;
 
     public Vehicle() {
     }
@@ -37,5 +46,13 @@ public class Vehicle {
         return Optional.ofNullable(
                 location
         );
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public Set<Repair> getRepairs() {
+        return Collections.unmodifiableSet(repairs);
     }
 }

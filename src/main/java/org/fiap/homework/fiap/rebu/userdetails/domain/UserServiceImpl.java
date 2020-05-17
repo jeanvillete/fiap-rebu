@@ -1,8 +1,11 @@
 package org.fiap.homework.fiap.rebu.userdetails.domain;
 
 import org.fiap.homework.fiap.rebu.common.exception.InvalidSuppliedDataException;
+import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserHasOpenTrip;
 import org.fiap.homework.fiap.rebu.userdetails.domain.exception.UserNicknameConflictException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 class UserServiceImpl implements UserService {
@@ -36,5 +39,25 @@ class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         this.userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findUserByNickname(String nickname) {
+        return userRepository.findByNickname(nickname);
+    }
+
+    @Override
+    public void ensureThereIsNoOpenTripForTheUser(User user) throws UserHasOpenTrip {
+        boolean anyOpenTripForUser = user.getTrips()
+                .stream()
+                .filter(trip -> trip.getLandingDateTime() == null)
+                .findAny()
+                .isPresent();
+
+        if (anyOpenTripForUser) {
+            throw new UserHasOpenTrip(
+                    "There is already an open trip for this user, so there is no how to request another one."
+            );
+        }
     }
 }

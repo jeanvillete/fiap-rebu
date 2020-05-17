@@ -8,4 +8,5 @@ interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<Integer> countByNickname(String nickname);
 
+    Optional<User> findByNickname(String nickname);
 }

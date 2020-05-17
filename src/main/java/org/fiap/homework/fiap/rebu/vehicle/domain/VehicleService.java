@@ -16,4 +16,10 @@ public interface VehicleService {
     void save(Vehicle vehicle);
 
     Optional<Vehicle> getVehicleByPlate(String plate);
+
+    Optional<Vehicle> retrieveAnyAvailableVehicle();
+
+    void checkPlateIsAlreadyInUse(String plate) throws InvalidSuppliedDataException;
+
+    void vehicleAvailableForRepairing(Vehicle vehicle) throws InvalidSuppliedDataException;
 }

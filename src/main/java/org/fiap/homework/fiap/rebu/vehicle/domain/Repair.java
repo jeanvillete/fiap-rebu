@@ -34,4 +34,7 @@ public class Repair {
         return this;
     }
 
+    public LocalDateTime getCloseDateTime() {
+        return closeDateTime;
+    }
 }
