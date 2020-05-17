@@ -116,7 +116,7 @@ GET /vehicles
     {
         "plate": "ABC-1234",
         "location": "Rua X, Nr 1098, bairro Y, cidade baixa",
-        "status": "RAPAIRING"
+        "status": "REPAIRING"
     },
     {
         "plate": "CBA-6633",

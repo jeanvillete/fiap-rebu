@@ -79,7 +79,7 @@ public class TripUseCase {
         Location fromLocation = new Location(tripPayload.fromLocation);
         locationService.save(fromLocation);
 
-        Location toLocation = new Location(tripPayload.fromLocation);
+        Location toLocation = new Location(tripPayload.toLocation);
         locationService.save(toLocation);
 
         Vehicle vehicle = vehicleService.retrieveAnyAvailableVehicle()

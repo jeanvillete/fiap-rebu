@@ -55,4 +55,8 @@ public class Vehicle {
     public Set<Repair> getRepairs() {
         return Collections.unmodifiableSet(repairs);
     }
+
+    public Set<Trip> getTrips() {
+        return Collections.unmodifiableSet(trips);
+    }
 }

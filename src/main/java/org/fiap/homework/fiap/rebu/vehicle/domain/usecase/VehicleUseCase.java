@@ -18,9 +18,48 @@ import java.util.stream.Collectors;
 @Component
 public class VehicleUseCase {
 
+    public enum VehicleStatusPayload {
+        REPAIRING, ON_A_TRIP, AVAILABLE, ON_THE_WAY_TO_GET_PASSENGER;
+
+        static VehicleStatusPayload valueOf(Vehicle vehicle) {
+            boolean anyOpenRepairForVehicle = vehicle.getRepairs()
+                    .stream()
+                    .filter(repair -> repair.getCloseDateTime() == null)
+                    .findAny()
+                    .isPresent();
+
+            if (anyOpenRepairForVehicle) {
+                return REPAIRING;
+            }
+
+            boolean anyOpenOnBoardTrip = vehicle.getTrips()
+                    .stream()
+                    .filter(trip -> trip.getBoardingDateTime() == null)
+                    .findAny()
+                    .isPresent();
+
+            if (anyOpenOnBoardTrip) {
+                return ON_THE_WAY_TO_GET_PASSENGER;
+            }
+
+            boolean anyOpenNotFinishedTrip = vehicle.getTrips()
+                    .stream()
+                    .filter(trip -> trip.getLandingDateTime() == null)
+                    .findAny()
+                    .isPresent();
+
+            if (anyOpenNotFinishedTrip) {
+                return ON_A_TRIP;
+            }
+
+            return AVAILABLE;
+        }
+    }
+
     public static final class VehiclePayload {
         String plate;
         String location;
+        VehicleStatusPayload vehicleStatusPayload;
 
         public VehiclePayload() {
         }
@@ -35,6 +74,7 @@ public class VehicleUseCase {
                     .map(Location::getAddress)
                     .map(address -> address.orElse(""))
                     .orElse("");
+            this.vehicleStatusPayload = VehicleStatusPayload.valueOf(vehicle);
         }
 
         public String getPlate() {
@@ -43,6 +83,10 @@ public class VehicleUseCase {
 
         public String getLocation() {
             return location;
+        }
+
+        public VehicleStatusPayload getVehicleStatusPayload() {
+            return vehicleStatusPayload;
         }
     }
 
