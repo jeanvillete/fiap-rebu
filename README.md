@@ -213,6 +213,8 @@ POST /users/
 
 #### 5.6 - [use case: usuário solicita veículo para viagem] [issue #9](https://github.com/jeanvillete/fiap-rebu/issues/9)
 ##### este caso de uso necessita que já exista determinado usuário e veículos registrados no sistema
+##### - se o usuário não for encontrado, devolver mensagem informando o ocorrido com status ***400 Bad Request***
+##### - os campos localização de origem e destino são obrigatórios, e caso não for fornecido, devolver mensagem informando o ocorrido com status ***400 Bad Request***
 - para uma nova viagem, o usuário deve fornecer o local de encontro e o destino
     - o nickname para login deve ser fornecido via "path variable"
 - a localização de origem e destino do usuário devem ser registradas na tabela de domínio LOCATION
