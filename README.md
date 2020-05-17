@@ -69,7 +69,7 @@ Será necessário entregar aqui no Portal do Aluno:
 
 # 4 - domínio e premissas
 
-#### 4.4 - usuário (USER_DETAILS)
+#### 4.1 - usuário (USER_DETAILS)
 - o usuário que faz utilização do serviço de viagens com veículos autônomos
     - será mantido apenas um `nickname` (apelido/login) do usuário
 
